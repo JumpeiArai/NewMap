@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">NewMap</string>
+    <string name="map">NewMap</string>
+    <string name="map_show">MAP SHOW</string>
+</resources>

@@ -5,6 +5,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -17,6 +18,8 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.DrawerBuilder;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback {
@@ -28,6 +31,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Toolbar toolbar = (Toolbar)findViewById(R.id.my_toolbar);
+
+        //create the drawer and remember the `Drawer` result object
+        Drawer result = new DrawerBuilder()
+                .withActivity(this)
+                .withToolbar(toolbar)
+                .build();
+
         Button btn1 = (Button) findViewById(R.id.map_btn);
         Button btn2 = (Button) findViewById(R.id.map_cls);
         btn1.setOnClickListener(this);
@@ -37,6 +48,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         mLocationManager = (LocationManager) this.getSystemService(Service.LOCATION_SERVICE);
+
+        result.openDrawer();
     }
 
     public void onClick(View v) {
@@ -65,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void updateLocation() {
 
         Location myLocate = mLocationManager.getLastKnownLocation("gps");
+        //myLocateがNullPointer
         CameraUpdate cu = CameraUpdateFactory.newLatLng(
                 new LatLng(40,120)
         );
